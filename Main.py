@@ -1,7 +1,14 @@
 import telebot
 from telebot import types
 
-TOKEN = open('Data.txt').readline()
+users = []
+with open("Data.txt", encoding="utf-8") as file:
+    TOKEN = str(file.readline()).rstrip("\n")
+    print(TOKEN)
+    for x in file:
+        print(x)
+        users.append(int(x))
+
 bot = telebot.TeleBot(token=TOKEN)
 channel_ids = []
 content_type = []
@@ -14,7 +21,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text', 'photo'])
 def get_text_messages(message):
-    if message.from_user.id == 1024434298 or message.from_user.id == 5084407191:
+    if message.from_user.id in users:
         global first_message
         global content_type
         try:
